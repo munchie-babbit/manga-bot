@@ -13,6 +13,13 @@
 const i18n = require("../i18n.config");
 
 module.exports = class Response {
+  static genMangaWebsiteReply(mangaWebsite) {
+    console.log("in genMangaWebsiteReply", mangaWebsite);
+    let response = {
+      website: mangaWebsite
+    };
+    return response;
+  }
   static genQuickReply(text, quickReplies) {
     let response = {
       text: text,

@@ -18,6 +18,7 @@ const Curation = require("./curation"),
   Survey = require("./survey"),
   GraphApi = require("./graph-api"),
   i18n = require("../i18n.config"),
+  MangaUpdates = require("./manga_updates"),
   config = require("./config");
 
 module.exports = class Receive {
@@ -40,8 +41,6 @@ module.exports = class Receive {
 
         if (message.quick_reply) {
           responses = this.handleQuickReply();
-        } else if (message.attachments) {
-          responses = this.handleAttachmentMessage();
         } else if (message.text) {
           responses = this.handleTextMessage();
         }
@@ -93,13 +92,14 @@ module.exports = class Receive {
       message.includes("start over")
     ) {
       response = Response.genNuxMessage(this.user);
-    } else if (Number(message)) {
-      response = Order.handlePayload("ORDER_NUMBER");
-    } else if (message.includes("#")) {
-      response = Survey.handlePayload("CSAT_SUGGESTION");
-    } else if (message.includes(i18n.__("care.help").toLowerCase())) {
-      let care = new Care(this.user, this.webhookEvent);
-      response = care.handlePayload("CARE_HELP");
+    } else if (
+      message.includes(".com") ||
+      message.includes(".ca") ||
+      message.includes(".to") ||
+      message.includes(".net")
+    ) {
+      console.log("Received Website:", `${message} for ${this.user.psid}`);
+      response = MangaUpdates.handlePayload("ADDED_MANGA");
     } else {
       response = [
         Response.genText(
@@ -110,42 +110,12 @@ module.exports = class Receive {
         Response.genText(i18n.__("get_started.guidance")),
         Response.genQuickReply(i18n.__("get_started.help"), [
           {
-            title: i18n.__("menu.suggestion"),
-            payload: "CURATION"
-          },
-          {
-            title: i18n.__("menu.help"),
-            payload: "CARE_HELP"
-          },
-          {
-            title: i18n.__("menu.product_launch"),
-            payload: "PRODUCT_LAUNCH"
+            title: i18n.__("menu.add_manga"),
+            payload: "ADD_MANGA"
           }
         ])
       ];
     }
-
-    return response;
-  }
-
-  // Handles mesage events with attachments
-  handleAttachmentMessage() {
-    let response;
-
-    // Get the attachment
-    let attachment = this.webhookEvent.message.attachments[0];
-    console.log("Received attachment:", `${attachment} for ${this.user.psid}`);
-
-    response = Response.genQuickReply(i18n.__("fallback.attachment"), [
-      {
-        title: i18n.__("menu.help"),
-        payload: "CARE_HELP"
-      },
-      {
-        title: i18n.__("menu.start_over"),
-        payload: "GET_STARTED"
-      }
-    ]);
 
     return response;
   }
@@ -254,6 +224,8 @@ module.exports = class Receive {
       response = care.handlePayload(payload);
     } else if (payload.includes("ORDER")) {
       response = Order.handlePayload(payload);
+    } else if (payload.includes("ADD_MANGA")) {
+      response = MangaUpdates.handlePayload(payload);
     } else if (payload.includes("CSAT")) {
       response = Survey.handlePayload(payload);
     } else if (payload.includes("CHAT-PLUGIN")) {
@@ -306,16 +278,8 @@ module.exports = class Receive {
 
     let response = Response.genQuickReply(welcomeMessage, [
       {
-        title: i18n.__("menu.suggestion"),
-        payload: "CURATION"
-      },
-      {
-        title: i18n.__("menu.help"),
-        payload: "CARE_HELP"
-      },
-      {
-        title: i18n.__("menu.product_launch"),
-        payload: "PRODUCT_LAUNCH"
+        title: i18n.__("menu.add_manga"),
+        payload: "ADD_MANGA"
       }
     ]);
 

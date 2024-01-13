@@ -6,6 +6,7 @@
 		"order": "menu.order",
 		"help": "menu.help",
 		"suggestion": "menu.suggestion",
-		"shop": "menu.shop"
+		"shop": "menu.shop",
+		"add_manga": "menu.add_manga"
 	}
 }

@@ -4,7 +4,7 @@
   "description": "A sample app to show how to build a great Messenger experience!",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "lint": "./node_modules/.bin/eslint ."
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "express": "^4.17.1",
     "i18n": "^0.8.3",
     "node-fetch": "^2.6.1",
+    "nodemon": "^3.0.2",
     "path": "^0.12.7"
   },
   "engines": {
