@@ -13,13 +13,6 @@
 const i18n = require("../i18n.config");
 
 module.exports = class Response {
-  static genMangaWebsiteReply(mangaWebsite) {
-    console.log("in genMangaWebsiteReply", mangaWebsite);
-    let response = {
-      website: mangaWebsite
-    };
-    return response;
-  }
   static genQuickReply(text, quickReplies) {
     let response = {
       text: text,
@@ -160,21 +153,6 @@ module.exports = class Response {
 
     let guide = this.genText(i18n.__("get_started.guidance"));
 
-    let curation = this.genQuickReply(i18n.__("get_started.help"), [
-      {
-        title: i18n.__("menu.suggestion"),
-        payload: "CURATION"
-      },
-      {
-        title: i18n.__("menu.help"),
-        payload: "CARE_HELP"
-      },
-      {
-        title: i18n.__("menu.product_launch"),
-        payload: "PRODUCT_LAUNCH"
-      }
-    ]);
-
-    return [welcome, guide, curation];
+    return [welcome, guide];
   }
 };

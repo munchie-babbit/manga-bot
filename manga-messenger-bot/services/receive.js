@@ -96,10 +96,12 @@ module.exports = class Receive {
       message.includes(".com") ||
       message.includes(".ca") ||
       message.includes(".to") ||
-      message.includes(".net")
+      message.includes(".net") ||
+      message.includes(".org")
     ) {
       console.log("Received Website:", `${message} for ${this.user.psid}`);
-      response = MangaUpdates.handlePayload("ADDED_MANGA");
+      let mangaUpdates = new MangaUpdates(this.user, message);
+      response = mangaUpdates.handlePayload("ADDED_MANGA");
     } else {
       response = [
         Response.genText(
@@ -112,6 +114,14 @@ module.exports = class Receive {
           {
             title: i18n.__("menu.add_manga"),
             payload: "ADD_MANGA"
+          },
+          {
+            title: i18n.__("menu.remove_manga"),
+            payload: "REMOVE_MANGA"
+          },
+          {
+            title: i18n.__("menu.list_manga"),
+            payload: "LIST_MANGA"
           }
         ])
       ];
@@ -224,8 +234,9 @@ module.exports = class Receive {
       response = care.handlePayload(payload);
     } else if (payload.includes("ORDER")) {
       response = Order.handlePayload(payload);
-    } else if (payload.includes("ADD_MANGA")) {
-      response = MangaUpdates.handlePayload(payload);
+    } else if (payload.includes("MANGA")) {
+      let mangaUpdates = new MangaUpdates(this.user);
+      response = mangaUpdates.handlePayload(payload);
     } else if (payload.includes("CSAT")) {
       response = Survey.handlePayload(payload);
     } else if (payload.includes("CHAT-PLUGIN")) {
@@ -280,6 +291,14 @@ module.exports = class Receive {
       {
         title: i18n.__("menu.add_manga"),
         payload: "ADD_MANGA"
+      },
+      {
+        title: i18n.__("menu.remove_manga"),
+        payload: "REMOVE_MANGA"
+      },
+      {
+        title: i18n.__("menu.list_manga"),
+        payload: "LIST_MANGA"
       }
     ]);
 

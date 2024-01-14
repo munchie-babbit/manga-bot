@@ -18,6 +18,7 @@ const express = require("express"),
   Receive = require("./services/receive"),
   GraphApi = require("./services/graph-api"),
   User = require("./services/user"),
+  MangaDatabase = require("./services/manga-database"),
   config = require("./services/config"),
   i18n = require("./i18n.config"),
   app = express();
@@ -201,7 +202,10 @@ function isGuestUser(webhookEvent) {
   return guestUser;
 }
 
-function receiveAndReturn(user, webhookEvent, isUserRef) {
+async function receiveAndReturn(user, webhookEvent, isUserRef) {
+  await MangaDatabase.connectToDatabase().then(() => {
+    MangaDatabase.addUser(user);
+  });
   let receiveMessage = new Receive(user, webhookEvent, isUserRef);
   return receiveMessage.handleMessage();
 }
@@ -294,6 +298,11 @@ function verifyRequestSignature(req, res, buf) {
 
 // Check if all environment variables are set
 config.checkEnvVariables();
+
+// Connect to database
+MangaDatabase.connectToDatabase().then(() => {
+  setInterval(MangaDatabase.checkAllMangas, 10000); // Check every minute
+});
 
 // Listen for requests :)
 var listener = app.listen(config.port, function () {

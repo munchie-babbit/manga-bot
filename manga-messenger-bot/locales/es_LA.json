@@ -7,6 +7,7 @@
 		"help": "menu.help",
 		"suggestion": "menu.suggestion",
 		"shop": "menu.shop",
-		"add_manga": "menu.add_manga"
+		"add_manga": "menu.add_manga",
+		"remove_manga": "menu.remove_manga"
 	}
 }

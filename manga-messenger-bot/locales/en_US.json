@@ -4,6 +4,8 @@
   },
   "menu": {
     "add_manga": "Add a manga",
+    "remove_manga": "Remove a manga",
+    "list_manga": "List my manga",
     "order": "menu.order",
     "help": "menu.help",
     "suggestion": "menu.suggestion",
@@ -17,7 +19,10 @@
   },
   "manga": {
     "website": "Enter in the website of the manga. Link to the manga's list of chapters page.",
-    "added": "Cool. It's now been added to your list."
+    "added": "Cool. It's added.",
+    "remove": "What is the name of the manga you want to remove?",
+    "removed": "Ok. It's removed.",
+    "list": "Here is your list of manga: {{mangas}}"
   },
   "chat_plugin": {
     "prompt": "Thanks for visiting our store, be sure to check out all the great styles we have on the summer section."

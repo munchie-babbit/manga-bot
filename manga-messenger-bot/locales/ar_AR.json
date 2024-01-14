@@ -1,12 +1,14 @@
 {
-	"profile": {
-		"greeting": "profile.greeting"
-	},
-	"menu": {
-		"order": "menu.order",
-		"help": "menu.help",
-		"suggestion": "menu.suggestion",
-		"shop": "menu.shop",
-		"add_manga": "menu.add_manga"
-	}
+  "profile": {
+    "greeting": "profile.greeting"
+  },
+  "menu": {
+    "order": "menu.order",
+    "help": "menu.help",
+    "suggestion": "menu.suggestion",
+    "shop": "menu.shop",
+    "add_manga": "menu.add_manga",
+    "remove_manga": "menu.remove_manga",
+    "list_manga": "menu.list_manga"
+  }
 }

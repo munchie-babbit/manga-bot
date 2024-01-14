@@ -146,6 +146,16 @@ module.exports = class Profile {
           title: i18n.__("menu.add_manga"),
           type: "postback",
           payload: "ADD_MANGA"
+        },
+        {
+          title: i18n.__("menu.remove_manga"),
+          type: "postback",
+          payload: "REMOVE_MANGA"
+        },
+        {
+          title: i18n.__("menu.list_manga"),
+          type: "postback",
+          payload: "LIST_MANGA"
         }
       ]
     };
